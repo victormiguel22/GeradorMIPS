@@ -94,7 +94,12 @@ class AnalisadorSintatico:
 
     def __init__(self):
         self.erros: List[ErroSintatico] = []
-        self.parser = yacc.yacc(module=self, debug=False)
+        self.parser = yacc.yacc(
+            module=self,
+            debug=True,           # Ativa logs detalhados no terminal
+            write_tables=True,    # Gera os arquivos com as tabelas
+            tabmodule='tabela_parsing'  # Nome do arquivo que vai guardar as tabelas (opcional, mas recomendado)
+        )
 
     # ==================== REGRAS DA GRAMÁTICA ====================
 
