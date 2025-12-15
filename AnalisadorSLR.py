@@ -602,3 +602,28 @@ if __name__ == "__main__":
     semantico = AnalisadorSemantico()
     semantico.analisar(ast)
     semantico.imprimir_erros()
+
+    if not semantico.tem_erros():
+        print("\n" + "="*60)
+        print("GERANDO CÓDIGO MIPS")
+        print("="*60)
+        
+        from GeradorCodigoMIPS import GeradorCodigoMIPS
+        
+        gerador = GeradorCodigoMIPS()
+        codigo_mips = gerador.gerar(ast)
+        
+        print("\n=== CÓDIGO MIPS GERADO ===")
+        print(codigo_mips)
+        
+        # Salva o arquivo para abrir no MARS
+        with open("programa.asm", "w", encoding="utf-8") as f:
+            f.write(codigo_mips)
+        
+        print("\nArquivo 'programa.asm' criado com sucesso!")
+        print("Agora abra o MARS, vá em File → Open e selecione 'programa.asm'")
+        print("Depois clique em Assemble (F3) e Run (F5)")
+    else:
+        print("\nNão foi possível gerar código MIPS devido a erros semânticos.")
+
+    
